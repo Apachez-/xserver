@@ -1887,19 +1887,15 @@ ProcSetPointerMapping(ClientPtr client)
 int
 ProcGetKeyboardMapping(ClientPtr client)
 {
-    DeviceIntPtr kbd = PickKeyboard(client);
-    XkbDescPtr xkb;
-    KeySymsPtr syms;
-    int rc;
-
     REQUEST(xGetKeyboardMappingReq);
     REQUEST_SIZE_MATCH(xGetKeyboardMappingReq);
 
-    rc = dixCallDeviceAccessCallback(client, kbd, DixGetAttrAccess);
+    DeviceIntPtr kbd = PickKeyboard(client);
+    int rc = dixCallDeviceAccessCallback(client, kbd, DixGetAttrAccess);
     if (rc != Success)
         return rc;
 
-    xkb = kbd->key->xkbInfo->desc;
+    XkbDescPtr xkb = kbd->key->xkbInfo->desc;
 
     if ((stuff->firstKeyCode < xkb->min_key_code) ||
         (stuff->firstKeyCode > xkb->max_key_code)) {
@@ -1911,7 +1907,7 @@ ProcGetKeyboardMapping(ClientPtr client)
         return BadValue;
     }
 
-    syms = XkbGetCoreMap(kbd);
+    KeySymsPtr syms = XkbGetCoreMap(kbd);
     if (!syms)
         return BadAlloc;
 
