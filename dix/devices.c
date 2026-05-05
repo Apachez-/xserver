@@ -1408,10 +1408,7 @@ ValuatorAccelerationRec pointerAccelerationScheme[] = {
 Bool
 InitPointerAccelerationScheme(DeviceIntPtr dev, int scheme)
 {
-    int i = -1;
-    ValuatorClassPtr val;
-
-    val = dev->valuator;
+    ValuatorClassPtr val = dev->valuator;
 
     if (!val)
         return FALSE;
@@ -1419,6 +1416,7 @@ InitPointerAccelerationScheme(DeviceIntPtr dev, int scheme)
     if (InputDevIsMaster(dev) && scheme != PtrAccelNoOp)
         return FALSE;
 
+    int i = -1;
     for (int x = 0; pointerAccelerationScheme[x].number >= 0; x++) {
         if (pointerAccelerationScheme[x].number == scheme) {
             i = x;
