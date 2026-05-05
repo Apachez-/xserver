@@ -1722,8 +1722,6 @@ BadDeviceMap(BYTE * buff, int length, unsigned low, unsigned high, XID *errval)
 int
 ProcSetModifierMapping(ClientPtr client)
 {
-    int rc;
-
     REQUEST(xSetModifierMappingReq);
     REQUEST_AT_LEAST_SIZE(xSetModifierMappingReq);
 
@@ -1732,7 +1730,7 @@ ProcSetModifierMapping(ClientPtr client)
         return BadLength;
 
 
-    rc = change_modmap(client, PickKeyboard(client), (KeyCode *) &stuff[1],
+    int rc = change_modmap(client, PickKeyboard(client), (KeyCode *) &stuff[1],
                        stuff->numKeyPerModifier);
     if (rc == MappingFailed)
         return BadValue;
